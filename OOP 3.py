@@ -3,10 +3,10 @@ from tkinter import messagebox
 
 window = tk.Tk()
 window.title("Payslip")
-window.geometry("350x350")
+window.geometry("500x500")
 window.resizable(False, False)
 
-# DATA
+# data pinag sama sama na para di magulo
 data = {
     "Manager": (25000, 28000, 20),
     "System Administrator": (20000, 23000, 15),
@@ -17,7 +17,7 @@ data = {
     "Messenger": (5000, 5500, 4)
 }
 
-# VARIABLES
+# variable naka ayos para di magulo
 name = tk.StringVar()
 position = tk.StringVar()
 ot_hours = tk.StringVar()
@@ -29,34 +29,60 @@ net = tk.StringVar()
 
 SSS = 200
 
-# FUNCTIONS
+# Pang compute ng salary
 def compute():
     try:
         pos = position.get()
         grade = pay_grade.get()
-        ot = float(ot_hours.get())
+
+        ot_val = ot_hours.get()
+
+        if ot_val == "":
+            ot = 0
+        else:
+            ot = float(ot_val)
 
         if pos not in data or grade == "":
-            messagebox.showerror("Error", "Complete input")
+            messagebox.showwarning("Incomplete Data", "Please select a Position and Pay Grade.")
             return
 
         gradeA, gradeB, tax_rate = data[pos]
-        basic = gradeA if grade == "A" else gradeB
+
+        if grade == "A":
+            basic = gradeA
+        else:
+            basic = gradeB
 
         ot_pay = ot * (0.01 * basic)
         gross_pay = basic + ot_pay
         tax_pay = gross_pay * (tax_rate / 100)
-        total = SSS + tax_pay
-        net_pay = gross_pay - total
 
-        gross.set(f"{gross_pay:.0f}")
-        tax.set(f"{tax_pay:.0f}")
+        total_deduction = SSS + tax_pay
+        net_pay = gross_pay - total_deduction
+
+        gross.set(str(round(gross_pay, 2)))
+        tax.set(str(round(tax_pay, 2)))
         sss.set("200")
-        net.set(f"{net_pay:.0f}")
+        net.set(str(round(net_pay, 2)))
 
-    except:
-        messagebox.showerror("Error", "Invalid input")
+        details = (
+            "Name: " + name.get() + "\n" +
+            "Position: " + pos + "\n" +
+            "OT Hours: " + str(ot) + "\n" +
+            "Pay Grade: " + grade + "\n" +
+            "-----------------------------------\n" +
+            "Gross Salary: ₱" + str(round(gross_pay, 2)) + "\n" +
+            "Tax: ₱" + str(round(tax_pay, 2)) + "\n" +
+            "SSS: ₱200\n" +
+            "Net Salary: ₱" + str(round(net_pay, 2))
+        )
 
+        messagebox.showinfo("Payslip Details", details)
+
+    except ValueError:
+        messagebox.showerror("Error", "Invalid input for OT Hours. Please enter a valid number.")
+
+# pang clear
 def clear():
     name.set("")
     position.set("")
@@ -67,27 +93,27 @@ def clear():
     sss.set("")
     net.set("")
 
-# TITLE
+# title
 tk.Label(window, text="PAYSLIP", font=("Arial", 14, "bold")).pack(pady=10)
 
-# NAME
+# name
 tk.Label(window, text="Name").pack()
 tk.Entry(window, textvariable=name).pack()
 
-# POSITION
+# postion
 tk.Label(window, text="Position").pack()
 tk.OptionMenu(window, position, *data.keys()).pack()
 
-# OT
+# ot ni porman
 tk.Label(window, text="OT Hours").pack()
 tk.Entry(window, textvariable=ot_hours).pack()
 
-# PAY GRADE
+# pay grade
 tk.Label(window, text="Pay Grade").pack()
 tk.Radiobutton(window, text="A", variable=pay_grade, value="A").pack()
 tk.Radiobutton(window, text="B", variable=pay_grade, value="B").pack()
 
-# OUTPUTS
+# output 
 tk.Label(window, text="Gross Salary").pack()
 tk.Entry(window, textvariable=gross, state="readonly").pack()
 
@@ -100,7 +126,7 @@ tk.Entry(window, textvariable=sss, state="readonly").pack()
 tk.Label(window, text="Net Salary").pack()
 tk.Entry(window, textvariable=net, state="readonly").pack()
 
-# BUTTONS
+# button na de pindot
 frame = tk.Frame(window)
 frame.pack(pady=10)
 
