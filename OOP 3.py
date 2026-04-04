@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import ttk  # Import ttk for a cleaner, modern look
+from tkinter import ttk  # Import ttk for a cleaner theme
 
 window = tk.Tk()
 window.title("Payslip")
-# Made the window slightly taller so the elements aren't squished
+
 window.geometry("450x550") 
 window.resizable(False, False)
 
@@ -61,7 +61,6 @@ def compute():
         total_deduction = SSS + tax_pay
         net_pay = gross_pay - total_deduction
 
-        # Added formatting so it shows as currency with 2 decimal places
         gross.set(f"₱ {gross_pay:,.2f}")
         tax.set(f"₱ {tax_pay:,.2f}")
         sss.set("₱ 200.00")
