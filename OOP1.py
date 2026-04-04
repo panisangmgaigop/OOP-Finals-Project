@@ -9,9 +9,17 @@ window.resizable(False, False)
 window.configure(bg='#333333')
 
 def deets():
+
+    if name.get() == "" or address.get() == "" or contact.get() == "" or email.get() == "":
+        messagebox.showwarning("Incomplete Data", "Please fill in all the fields")
+        return
+
+
     messagebox.showinfo("User Information", "Name: " + name.get() + "\nAddress: " + address.get() + "\nContact Number: " + contact.get() + "\nEmail: " + email.get())
 
-def clr():
+
+
+def clr():  
     name.delete(0, tk.END)
     address.delete(0, tk.END)
     contact.delete(0, tk.END)
