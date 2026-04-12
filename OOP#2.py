@@ -3,11 +3,18 @@ from tkinter import messagebox
 from tkinter import ttk 
 
 
+
+# variable ng colors para sa design ng program note: dito nag bebase lahat ng kulay sa program
+light_green = "#9bbc0f"    
+dark_green = "#0f380f"  
+med_green = "#306230"   
+
+
 window = tk.Tk()
 window.title("Group ng mga may BITAW")
 window.geometry("350x300")
 window.resizable(False, False)
-
+window.configure(bg=light_green)  
 
 
 amount = tk.StringVar()
@@ -50,24 +57,58 @@ def clear():
     shipping.set("")
     result.set("")
 
-tk.Label(window, text="Group ng mga may BITAW", font=("Arial", 14, "bold")).pack(pady=10)
+# Title ng program with design sa loob ng ()
+tk.Label(window, text="GROUP NG MGA MAY BITAW", 
+         font=("Courier", 12, "bold"), 
+         bg=light_green, fg=dark_green).pack(pady=10)
 
-tk.Label(window, text="Total amount of your order (₱):").pack()
-tk.Entry(window, textvariable=amount).pack(pady=5)
+# text ng enter amount
+tk.Label(window, text="Enter Amount (₱):", 
+         bg=light_green, fg=dark_green, 
+         font=("Courier", 9)).pack()
 
-tk.Label(window, text="Choose shipping method:").pack()
+# Style ng text box na pwedeng mag lagay ng input
+tk.Entry(window, textvariable=amount, 
+         bg="#e0f8d0", fg=dark_green, 
+         font=("Courier", 9)).pack(pady=5)
 
-ttk.Radiobutton(window, text="Priority (overnight) $14.95", variable=shipping, value="priority").pack(anchor="w")
-ttk.Radiobutton(window, text="Express (2 days) $11.95", variable=shipping, value="express").pack(anchor="w")
-ttk.Radiobutton(window, text="Standard (5-7 days) $5.95", variable=shipping, value="standard").pack(anchor="w")
+tk.Label(window, text="Shipping Method:", 
+         bg=light_green, fg=dark_green, 
+         font=("Courier", 9)).pack()
 
-tk.Label(window, text="Amount Payable (12% VAT included):").pack(pady=10)
-tk.Entry(window, textvariable=result, state="readonly").pack()
+# settings/design ng radio button 
+style = ttk.Style()
+style.configure("TRadiobutton",
+                background=light_green,
+                foreground=dark_green,
+                font=("Courier", 8))
 
-frame = tk.Frame(window)
+ttk.Radiobutton(window, text="Priority $14.95", variable=shipping, value="priority").pack(anchor="w", padx=100)
+ttk.Radiobutton(window, text="Express $11.95", variable=shipping, value="express").pack(anchor="w", padx=100)
+ttk.Radiobutton(window, text="Standard $5.95", variable=shipping, value="standard").pack(anchor="w", padx=100)
+
+#-----------------------------------------------
+
+
+tk.Label(window, text="Total (with VAT):", 
+         bg=light_green, fg=dark_green, 
+         font=("Courier", 9)).pack(pady=10)
+
+# Style ng text box na hindi pwedeng lagyan ng input
+tk.Entry(window, textvariable=result, state="readonly", 
+         bg="#e0f8d0", fg=dark_green, 
+         font=("Courier", 9)).pack()
+
+frame = tk.Frame(window, bg=light_green)  # CHANGED
 frame.pack(pady=10)
 
-tk.Button(frame, text="Compute", command=compute).grid(row=0, column=0, padx=5)
-tk.Button(frame, text="Clear", command=clear).grid(row=0, column=1, padx=5)
+# compute and clear btn
+tk.Button(frame, text="COMPUTE", command=compute,
+          bg=med_green, fg="white",
+          font=("Courier", 9)).grid(row=0, column=0, padx=5)
+
+tk.Button(frame, text="CLEAR", command=clear,
+          bg=med_green, fg="white",
+          font=("Courier", 9)).grid(row=0, column=1, padx=5)
 
 window.mainloop()
