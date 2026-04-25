@@ -12,7 +12,7 @@ med_green = "#306230"
 
 window = tk.Tk()
 window.title("Group ng mga may BITAW")
-window.geometry("350x300")
+window.geometry("400x300")
 window.resizable(False, False)
 window.configure(bg=light_green)  
 
@@ -58,7 +58,8 @@ def clear():
     result.set("")
 
 # Title ng program with design sa loob ng ()
-tk.Label(window, text="GROUP NG MGA MAY BITAW", 
+underlined_text = "\u0332".join("Bitaw Corp.") + "\u0332"
+tk.Label(window, text=underlined_text, 
          font=("Courier", 12, "bold"), 
          bg=light_green, fg=dark_green).pack(pady=10)
 
