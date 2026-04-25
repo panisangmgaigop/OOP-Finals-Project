@@ -1,11 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import ttk  # Import ttk for a cleaner, modern look
+from tkinter import ttk 
 
 window = tk.Tk()
 window.title("Payslip")
-# Made the window slightly taller so the elements aren't squished
-window.geometry("450x550") 
+window.geometry("450x475") 
 window.resizable(False, False)
 
 # data pinag sama sama na para di magulo
@@ -23,7 +22,7 @@ data = {
 name = tk.StringVar()
 position = tk.StringVar()
 ot_hours = tk.StringVar()
-pay_salary = tk.StringVar()
+pay_grade = tk.StringVar()
 gross = tk.StringVar()
 tax = tk.StringVar()
 sss = tk.StringVar()
@@ -35,7 +34,7 @@ SSS = 200
 def compute():
     try:
         pos = position.get()
-        grade = pay_salary.get()
+        grade = pay_grade.get()
         ot_val = ot_hours.get()
 
         if ot_val == "":
@@ -61,7 +60,7 @@ def compute():
         total_deduction = SSS + tax_pay
         net_pay = gross_pay - total_deduction
 
-        # Added formatting so it shows as currency with 2 decimal places
+        # f is for float para mag show na may .00
         gross.set(f"₱ {gross_pay:,.2f}")
         tax.set(f"₱ {tax_pay:,.2f}")
         sss.set("₱ 200.00")
@@ -89,7 +88,7 @@ def clear():
     name.set("")
     position.set("")
     ot_hours.set("")
-    pay_salary.set("")
+    pay_grade.set("")
     gross.set("")
     tax.set("")
     sss.set("")
@@ -127,8 +126,8 @@ ttk.Entry(input_frame, textvariable=ot_hours, width=30).grid(row=2, column=1, st
 ttk.Label(input_frame, text="Pay Grade:", font=("Arial", 10)).grid(row=3, column=0, sticky="w", pady=5)
 grade_frame = ttk.Frame(input_frame)
 grade_frame.grid(row=3, column=1, sticky="w", pady=5, padx=10)
-ttk.Radiobutton(grade_frame, text="A", variable=pay_salary, value="A").pack(side="left", padx=(0, 15))
-ttk.Radiobutton(grade_frame, text="B", variable=pay_salary, value="B").pack(side="left")
+ttk.Radiobutton(grade_frame, text="A", variable=pay_grade, value="A").pack(side="left", padx=(0, 15))
+ttk.Radiobutton(grade_frame, text="B", variable=pay_grade, value="B").pack(side="left")
 
 # Visual Line
 ttk.Separator(window, orient='horizontal').pack(fill='x', padx=20, pady=10)
